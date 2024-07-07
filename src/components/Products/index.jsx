@@ -1,21 +1,7 @@
-import { useContext } from "react";
-import { CartContext } from "../../contexts/CartContext";
-
-function Item({ id, name, price }) {
-    // Use the addToCart function from CartContext
-    const { addToCart } = useContext(CartContext);
-
-    return (
-        <li>
-            <h3>{name}</h3>
-            <button onClick={() => addToCart({ id, name, price })}>
-                <span>Price: ${price}</span> Add to cart
-            </button>
-        </li>
-    );
-}
+import Item from "./Item";
 
 function Products() {
+    // List of products to display
     const products = [
         {
             id: 1,
@@ -35,7 +21,7 @@ function Products() {
     ];
 
     return (
-        <div>
+        <div className="products">
             <ul>
                 {products.map((product) => (
                     <Item key={product.id} {...product} />
