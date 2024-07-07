@@ -3,7 +3,8 @@ import { CartContext } from "../../contexts/CartContext";
 
 const Cart = () => {
     // Use the cart state and actions from CartContext
-    const { cart, removeFromCart, clearCart } = useContext(CartContext);
+    const { cart, removeFromCart, clearCart, decreaseQuantity } =
+        useContext(CartContext);
 
     // Calculate the total price
     const totalPrice = cart.reduce(
@@ -12,7 +13,7 @@ const Cart = () => {
     );
 
     return (
-        <div>
+        <div className="cart">
             <h2>Cart</h2>
             <ul>
                 {cart.map((product) => (
@@ -21,6 +22,12 @@ const Cart = () => {
                             {product.name} - ${product.price} x{" "}
                             {product.quantity}
                         </span>
+                        <button
+                            onClick={() => decreaseQuantity(product.id)}
+                            aria-label={`Decrease quantity of ${product.name}`}
+                        >
+                            Decrease
+                        </button>
                         <button
                             onClick={() => removeFromCart(product.id)}
                             aria-label={`Remove ${product.name}`}
