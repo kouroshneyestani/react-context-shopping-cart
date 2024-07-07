@@ -1,10 +1,15 @@
 import { useContext } from "react";
 import { CartContext } from "../../contexts/CartContext";
 
-// Cart component displays the items in the cart
 const Cart = () => {
     // Use the cart state and actions from CartContext
     const { cart, removeFromCart, clearCart } = useContext(CartContext);
+
+    // Calculate the total price
+    const totalPrice = cart.reduce(
+        (total, product) => total + product.price * product.quantity,
+        0
+    );
 
     return (
         <div>
@@ -12,14 +17,23 @@ const Cart = () => {
             <ul>
                 {cart.map((product) => (
                     <li key={product.id}>
-                        {product.name} - ${product.price} x {product.quantity}
-                        <button onClick={() => removeFromCart(product.id)}>
+                        <span>
+                            {product.name} - ${product.price} x{" "}
+                            {product.quantity}
+                        </span>
+                        <button
+                            onClick={() => removeFromCart(product.id)}
+                            aria-label={`Remove ${product.name}`}
+                        >
                             Remove
                         </button>
                     </li>
                 ))}
             </ul>
-            <button onClick={clearCart}>Clear Cart</button>
+            <p>Total Price: ${totalPrice.toFixed(2)}</p>
+            <button onClick={clearCart} aria-label="Clear Cart">
+                Clear Cart
+            </button>
         </div>
     );
 };
