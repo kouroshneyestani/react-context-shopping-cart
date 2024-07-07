@@ -1,5 +1,6 @@
 import { CartProvider } from "./contexts/CartContext";
 import Products from "./components/Products";
+import Cart from "./components/Cart";
 
 import "./App.css";
 
@@ -8,6 +9,7 @@ function App() {
         <>
             <CartProvider>
                 <Products />
+                <Cart />
             </CartProvider>
         </>
     );
