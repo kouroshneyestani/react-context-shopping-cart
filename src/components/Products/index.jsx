@@ -1,8 +1,14 @@
-function Item({ name, price }) {
+import { useContext } from "react";
+import { CartContext } from "../../contexts/CartContext";
+
+function Item({ id, name, price }) {
+    // Use the addToCart function from CartContext
+    const { addToCart } = useContext(CartContext);
+
     return (
         <li>
             <h3>{name}</h3>
-            <button>
+            <button onClick={() => addToCart({ id, name, price })}>
                 <span>Price: ${price}</span> Add to cart
             </button>
         </li>
