@@ -1,9 +1,9 @@
-import { createContext, useState } from "react";
+import { createContext, useState, useMemo } from "react";
 
 // Create a new context for the cart
 export const CartContext = createContext();
 
-// Create a provider component
+// Create a provider component for the CartContext
 export const CartProvider = ({ children }) => {
     // Initialize cart state with an empty array
     const [cart, setCart] = useState([]);
@@ -41,12 +41,13 @@ export const CartProvider = ({ children }) => {
         setCart([]);
     };
 
-    // Provide the cart state and actions to children components
+    // Memoize context value to prevent unnecessary re-renders
+    const value = useMemo(
+        () => ({ cart, addToCart, removeFromCart, clearCart }),
+        [cart]
+    );
+
     return (
-        <CartContext.Provider
-            value={{ cart, addToCart, removeFromCart, clearCart }}
-        >
-            {children}
-        </CartContext.Provider>
+        <CartContext.Provider value={value}>{children}</CartContext.Provider>
     );
 };
