@@ -29,9 +29,23 @@ export const CartProvider = ({ children }) => {
         });
     };
 
+    // Function to remove a product from the cart
+    const removeFromCart = (productId) => {
+        setCart((prevCart) =>
+            prevCart.filter((product) => product.id !== productId)
+        );
+    };
+
+    // Function to clear the entire cart
+    const clearCart = () => {
+        setCart([]);
+    };
+
     // Provide the cart state and actions to children components
     return (
-        <CartContext.Provider value={{ cart, addToCart }}>
+        <CartContext.Provider
+            value={{ cart, addToCart, removeFromCart, clearCart }}
+        >
             {children}
         </CartContext.Provider>
     );
