@@ -1,4 +1,4 @@
-import { createContext, useState, useMemo } from "react";
+import React, { createContext, useState, useMemo } from "react";
 
 // Create a new context for the cart
 export const CartContext = createContext();
@@ -41,9 +41,35 @@ export const CartProvider = ({ children }) => {
         setCart([]);
     };
 
+    // Function to decrease the quantity of a product in the cart
+    const decreaseQuantity = (productId) => {
+        setCart((prevCart) => {
+            return prevCart
+                .map((item) => {
+                    if (item.id === productId) {
+                        if (item.quantity > 1) {
+                            // Decrease quantity if greater than 1
+                            return { ...item, quantity: item.quantity - 1 };
+                        } else {
+                            // Remove the product if quantity is 1
+                            return null;
+                        }
+                    }
+                    return item;
+                })
+                .filter(Boolean); // Filter out null values
+        });
+    };
+
     // Memoize context value to prevent unnecessary re-renders
     const value = useMemo(
-        () => ({ cart, addToCart, removeFromCart, clearCart }),
+        () => ({
+            cart,
+            addToCart,
+            removeFromCart,
+            clearCart,
+            decreaseQuantity,
+        }),
         [cart]
     );
 
