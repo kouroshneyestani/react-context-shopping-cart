@@ -41,8 +41,19 @@ export const CartProvider = ({ children }) => {
         setCart([]);
     };
 
-    // Function to decrease the quantity of a product in the cart
-    const decreaseQuantity = (productId) => {
+    // Function to increment the quantity of a product in the cart
+    const incrementQuantity = (productId) => {
+        setCart((prevCart) => {
+            return prevCart.map((item) =>
+                item.id === productId
+                    ? { ...item, quantity: item.quantity + 1 }
+                    : item
+            );
+        });
+    };
+
+    // Function to decrement the quantity of a product in the cart
+    const decrementQuantity = (productId) => {
         setCart((prevCart) => {
             return prevCart
                 .map((item) => {
@@ -68,7 +79,8 @@ export const CartProvider = ({ children }) => {
             addToCart,
             removeFromCart,
             clearCart,
-            decreaseQuantity,
+            incrementQuantity,
+            decrementQuantity,
         }),
         [cart]
     );
